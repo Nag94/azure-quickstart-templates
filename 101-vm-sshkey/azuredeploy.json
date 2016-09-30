@@ -71,7 +71,21 @@
               "priority": 123,
               "direction": "Inbound"
             }
-          }
+          },
+          {
+            "name": "netdata_rule",
+            "properties": {
+              "description": "Open default netdata port",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "19999",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 124,
+              "direction": "Inbound"
+            }
+          },
         ]
       }
     },
