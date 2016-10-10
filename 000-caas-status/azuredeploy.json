@@ -33,70 +33,70 @@
       "type": "string",
       "defaultValue":"postgres",
       "metadata": {
-        "description": "Database Hostname"
+        "description": "Database Hostname."
       }
     },
     "db_database": {
       "type": "string",
       "defaultValue":"postgres",
       "metadata": {
-        "description": "Database Name"
+        "description": "Database Name."
       }
     },
     "db_username": {
       "type": "string",
       "defaultValue":"postgres",
       "metadata": {
-        "description": "Database user"
+        "description": "Database user."
       }
     },
     "db_password": {
       "type": "string",
       "defaultValue":"postgres",
       "metadata": {
-        "description": "database admin user"
+        "description": "database admin user."
       }
     },
     "postgres_user": {
       "type": "string",
       "defaultValue":"postgres",
       "metadata": {
-        "description": "PG user"
+        "description": "PG user."
       }
     },
     "postgres_password": {
       "type": "string",
       "defaultValue":"postgres",
       "metadata": {
-        "description": "PG password"
+        "description": "PG password."
       }
     },
     "mail_host": {
       "type": "string",
       "defaultValue":"smtp.example.com",
       "metadata": {
-        "description": "Mail server"
+        "description": "Mail server."
       }
     },
     "mail_port": {
       "type": "string",
       "defaultValue":"587",
       "metadata": {
-        "description": "Mail server port"
+        "description": "Mail server port."
       }
     },
     "mail_username": {
       "type": "string",
       "defaultValue":"hello@hello.fr",
       "metadata": {
-        "description": "Mail user Name"
+        "description": "Mail user Name."
       }
     },
     "mail_password": {
       "type": "string",
       "defaultValue":"Paswword",
       "metadata": {
-        "description": "User Mail password"
+        "description": "User Mail password."
       }
     },
     "mail_address": {
@@ -110,7 +110,7 @@
       "type": "string",
       "defaultValue":"cachethq",
       "metadata": {
-        "description": "Service Name"
+        "description": "Service Name."
       }
     }
   },
