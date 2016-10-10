@@ -259,7 +259,9 @@
                  ]
                },
                "cachet": {
-                 "image": "cachethq/docker",
+                 "build": {
+                   "context": "https://github.com/CachetHQ/Docker.git"
+                 },
                  "ports": [
                    "80:8000"
                  ],
