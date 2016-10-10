@@ -21,6 +21,97 @@
       "metadata": {
         "description": "SSH rsa public key file as a string."
       }
+    },
+    "db_driver": {
+      "type": "string",
+      "defaultValue": "pgsql",
+      "metadata": {
+        "description": "Database driver."
+      }
+    },
+    "db_host": {
+      "type": "string",
+      "defaultValue":"postgres",
+      "metadata": {
+        "description": "Database Hostname"
+      }
+    },
+    "db_database": {
+      "type": "string",
+      "defaultValue":"postgres",
+      "metadata": {
+        "description": "Database Name"
+      }
+    },
+    "db_username": {
+      "type": "string",
+      "defaultValue":"postgres",
+      "metadata": {
+        "description": "Database user"
+      }
+    },
+    "db_password": {
+      "type": "string",
+      "defaultValue":"postgres",
+      "metadata": {
+        "description": "database admin user"
+      }
+    },
+    "postgres_user": {
+      "type": "string",
+      "defaultValue":"postgres",
+      "metadata": {
+        "description": "PG user"
+      }
+    },
+    "postgres_password": {
+      "type": "string",
+      "defaultValue":"postgres",
+      "metadata": {
+        "description": "PG password"
+      }
+    },
+    "mail_host": {
+      "type": "string",
+      "defaultValue":"smtp.example.com",
+      "metadata": {
+        "description": "Mail server"
+      }
+    },
+    "mail_port": {
+      "type": "string",
+      "defaultValue":"587",
+      "metadata": {
+        "description": "Mail server port"
+      }
+    },
+    "mail_username": {
+      "type": "string",
+      "defaultValue":"hello@hello.fr",
+      "metadata": {
+        "description": "Mail user Name"
+      }
+    },
+    "mail_password": {
+      "type": "string",
+      "defaultValue":"Paswword",
+      "metadata": {
+        "description": "User Mail password"
+      }
+    },
+    "mail_address": {
+      "type": "string",
+      "defaultValue":"herve.leclerc@alterway.fr",
+      "metadata": {
+        "description": "Mail From."
+      }
+    },
+    "mail_name": {
+      "type": "string",
+      "defaultValue":"cachethq",
+      "metadata": {
+        "description": "Service Name"
+      }
     }
   },
   "variables": {
@@ -229,19 +320,19 @@
         "autoUpgradeMinorVersion": true,
         "protectedSettings": {
           "environment": {
-            "DB_DRIVER": "pgsql",
-            "DB_HOST": "postgres",
-            "DB_DATABASE": "postgres",
-            "DB_USERNAME": "postgres",
-            "DB_PASSWORD": "postgres",
-            "POSTGRES_USER": "postgres",
-            "POSTGRES_PASSWORD": "postgres",
-            "MAIL_HOST": "smtp.hello.com",
-            "MAIL_PORT": "587",
-            "MAIL_USERNAME": "hello@hello.fr",
-            "MAIL_PASSWORD": "Paswword",
-            "MAIL_ADDRESS": "herve.leclerc@alterway.fr",
-            "MAIL_NAME": "cachethq"
+            "DB_DRIVER": "[parameters('db_driver')]",
+            "DB_HOST": "[parameters('db_host')]",
+            "DB_DATABASE": "[parameters('db_database')]",
+            "DB_USERNAME": "[parameters('db_username')]",
+            "DB_PASSWORD": "[parameters('db_password')]",
+            "POSTGRES_USER": "[parameters('postgres_user')]",
+            "POSTGRES_PASSWORD": "[parameters('postgres_password')]",
+            "MAIL_HOST": "[parameters('mail_host')]",
+            "MAIL_PORT": "[parameters('mail_port')]",
+            "MAIL_USERNAME": "[parameters('mail_username')]",
+            "MAIL_PASSWORD": "[parameters('mail_password')]",
+            "MAIL_ADDRESS": "[parameters('mail_address')]",
+            "MAIL_NAME": "[parameters('mail_name')]"
           }
         },
         "settings": {
