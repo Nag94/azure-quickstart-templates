@@ -263,7 +263,7 @@
                    "context": "https://github.com/CachetHQ/Docker.git"
                  },
                  "ports": [
-                   "80:8000"
+                   "80:80"
                  ],
                  "links": [
                    "postgres:postgres"
