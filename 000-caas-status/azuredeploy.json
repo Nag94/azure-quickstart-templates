@@ -261,7 +261,7 @@
                "cachet": {
                  "image": "cachethq/docker",
                  "ports": [
-                   "80:80"
+                   "80:8000"
                  ],
                  "links": [
                    "postgres:postgres"
