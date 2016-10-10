@@ -14,11 +14,17 @@
       "metadata": {
         "description": "SSH rsa public key file as a string."
       }
+    },
+    "vmName": {
+      "type": "string",
+      "defaultValue": "caas-status",
+      "metadata": {
+        "description": "SSH rsa public key file as a string."
+      }
     }
   },
   "variables": {
     "vmSize": "Standard_DS1",
-    "vmName": "caas-status",
     "ubuntuOSVersion": "16.04.0-LTS",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'sacs')]",
     "uniqueDnsLabelPrefix": "[concat('store', uniquestring(resourceGroup().id))]",
@@ -158,7 +164,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[variables('vmName')]",
+      "name": "[parameters('vmName')]",
       "location": "[variables('location')]",
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
@@ -169,7 +175,7 @@
           "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('vmName')]",
+          "computerName": "[parameters('vmName')]",
           "adminUsername": "[parameters('adminUserName')]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": "true",
@@ -210,11 +216,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/', variables('extensionName'))]",
+      "name": "[concat(parameters('vmName'),'/', variables('extensionName'))]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
