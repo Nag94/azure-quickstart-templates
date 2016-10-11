@@ -115,6 +115,7 @@
     }
   },
   "variables": {
+    "template_url": "https://raw.githubusercontent.com/herveleclerc/azure-quickstart-templates/master",
     "vmSize": "Standard_DS1",
     "ubuntuOSVersion": "16.04.0-LTS",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'sacs')]",
@@ -302,6 +303,27 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
             }
           ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('vmName'),'/configurecachet')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/extensions/', parameters('vmName'),'/', variables('extensionName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[concat(variables('template_url'),'/000-caas-status/setup.sh')]"
+          ],
+          "commandToExecute": "/bin/bash setup.sh"
         }
       }
     },
