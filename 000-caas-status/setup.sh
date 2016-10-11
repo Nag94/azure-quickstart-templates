@@ -24,7 +24,8 @@ do
   fi
 done
 
-docker exec -it compose_cachet_1  php artisan key:generate
-docker exec -it compose_cachet_1  php artisan app:install
-docker exec -it compose_cachet_1  php artisan config:cache
+docker exec compose_cachet_1  php artisan key:generate
+docker exec compose_cachet_1  php artisan app:install
+docker exec compose_cachet_1  php artisan config:cache
 
+exit 0
