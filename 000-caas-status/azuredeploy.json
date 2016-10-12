@@ -119,7 +119,7 @@
     "vmSize": "Standard_DS1",
     "ubuntuOSVersion": "16.04.0-LTS",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'sacs')]",
-    "uniqueDnsLabelPrefix": "[concat('store', uniquestring(resourceGroup().id))]",
+    "uniqueDnsLabelPrefix": "[concat('caas-status', '000' )]",
     "location": "[resourceGroup().location]",
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
@@ -352,10 +352,10 @@
                },
                "cachet": {
                  "build": {
-                   "context": "https://github.com/CachetHQ/Docker.git"
+                   "context": "https://github.com/herveleclerc/Docker.git"
                  },
                  "ports": [
-                   "80:80"
+                   "80:8000"
                  ],
                  "links": [
                    "postgres:postgres"
