@@ -184,6 +184,20 @@
               "priority": 124,
               "direction": "Inbound"
             }
+          },
+          {
+            "name": "tcp8000_rule",
+            "properties": {
+              "description": "TCP 8000 port",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "8000",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 125,
+              "direction": "Inbound"
+            }
           }
         ]
       }
