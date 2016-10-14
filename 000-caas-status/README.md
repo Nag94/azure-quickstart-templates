@@ -1,1 +1,1 @@
-# Deploy CachetHQ on azure
+# Deploy CachetHQ on azure with letsencrypt companion
