@@ -1,0 +1,9 @@
+version: "2"
+services:
+  cachet-monitor-portal:
+    image: herveleclerc/docker-cachet-monitor
+    container_name: cachet-monitor-portal
+    restart: always
+    volumes:
+      - /etc/docker/compose/cachet-monitor:/etc
+    command: -c /etc/cachet-monitor.config.json

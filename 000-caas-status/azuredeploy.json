@@ -112,6 +112,41 @@
       "metadata": {
         "description": "Service Name."
       }
+    },
+    "virtual_host": {
+      "type": "string",
+      "defaultValue":"virtual_host",
+      "metadata": {
+        "description": "VHost domain name"
+      }
+    },
+    "virtual_port": {
+      "type": "string",
+      "defaultValue":"virtual_port",
+      "metadata": {
+        "description": "Service Port to be proxified"
+      }
+    },
+    "virtual_network": {
+      "type": "string",
+      "defaultValue":"virtual_network",
+      "metadata": {
+        "description": "Docker network"
+      }
+    },
+    "letsencrypt_host": {
+      "type": "string",
+      "defaultValue":"letsencrypt_host",
+      "metadata": {
+        "description": "letsencrypt domain name"
+      }
+    },
+    "letsencrypt_email": {
+      "type": "string",
+      "defaultValue":"letsencrypt_email",
+      "metadata": {
+        "description": "admin letsencrypt mail"
+      }
     }
   },
   "variables": {
@@ -347,13 +382,50 @@
             "MAIL_USERNAME": "[parameters('mail_username')]",
             "MAIL_PASSWORD": "[parameters('mail_password')]",
             "MAIL_ADDRESS": "[parameters('mail_address')]",
-            "MAIL_NAME": "[parameters('mail_name')]"
+            "MAIL_NAME": "[parameters('mail_name')]",
+            "VIRTUAL_HOST": "[parameters('virtual_host')]",
+            "VIRTUAL_PORT": "[parameters('virtual_port')]",
+            "VIRTUAL_NETWORK": "[parameters('virtual_network')]",
+            "LETSENCRYPT_HOST": "[parameters('letsencrypt_host')]",
+            "LETSENCRYPT_EMAIL": "[parameters('letsencrypt_email')]"
           }
         },
         "settings": {
           "compose": {
             "version" : "2",
             "services": {
+
+
+               "nginx-proxy": {
+                 "image": "jwilder/nginx-proxy",
+                 "container_name": "nginx-proxy",
+                 "restart": "always",
+                 "ports": [
+                   "80:80",
+                   "443:443"
+                 ],
+                 "volumes": [
+                   "/etc/ssl/caas-status:/etc/nginx/certs:ro",
+                   "/etc/nginx/vhost.d",
+                   "/usr/share/nginx/html",
+                   "/var/run/docker.sock:/tmp/docker.sock:ro"
+                 ]
+               },
+               "letsencrypt-nginx-proxy-companion": {
+                 "image": "jrcs/letsencrypt-nginx-proxy-companion",
+                 "container_name": "letsencrypt-nginx-proxy-companion",
+                 "restart": "always",
+                 "volumes_from": [
+                  "nginx-proxy"
+                 ],
+                 "volumes": [
+                   "/var/run/docker.sock:/var/run/docker.sock:ro",
+                   "/etc/ssl/caas-status:/etc/nginx/certs:rw"
+                 ],
+                 "environment": [
+                   "DEBUG=true"
+                 ]
+               },
                "postgres": {
                  "image": "postgres:9.5",
                  "volumes": [
@@ -369,7 +441,10 @@
                    "context": "https://github.com/herveleclerc/Docker.git"
                  },
                  "ports": [
-                   "8000:8000"
+                   "8000"
+                 ],
+                 "expose": [
+                   "8000"
                  ],
                  "links": [
                    "postgres:postgres"
@@ -385,10 +460,17 @@
                    "MAIL_USERNAME",
                    "MAIL_PASSWORD",
                    "MAIL_ADDRESS",
-                   "MAIL_NAME"
+                   "MAIL_NAME",
+                   "VIRTUAL_HOST",
+                   "VIRTUAL_PORT",
+                   "VIRTUAL_NETWORK",
+                   "LETSENCRYPT_HOST",
+                   "LETSENCRYPT_EMAIL"
                  ],
                  "depends_on": [
-                   "postgres"
+                   "postgres",
+                   "nginx-proxy",
+                   "letsencrypt-nginx-proxy-companion"
                  ]
               }
             }
@@ -425,3 +507,5 @@
     }
   }
 }
+
+

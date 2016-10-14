@@ -1,0 +1,19 @@
+{
+  "api_url": "https://status.caas.fr/api/v1",
+  "api_token": "Must Be changed",
+  "insecure_api": false,
+  "monitors": [{
+    "name": "Portal response time",
+    "url": "https://portal",
+    "method": "get",
+    "strict_tls": true,
+    "interval": 10,
+    "timeout": 5,
+    "metric_id": 1,
+    "component_id": 2,
+    "threshold": 80,
+    "expected_status_code": 200,
+    "expected_body": ".*CaaS Portal.*"
+  }],
+  "system_name": "caas-status"
+}

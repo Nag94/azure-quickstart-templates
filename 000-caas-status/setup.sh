@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p  /etc/ssl/caas-setup
+
 c=0
 until docker info
 do
@@ -24,8 +26,9 @@ do
   fi
 done
 
-docker exec compose_cachet_1  php artisan key:generate
-docker exec compose_cachet_1  php artisan app:install
-docker exec compose_cachet_1  php artisan config:cache
+docker exec compose_cachet_1 php artisan key:generate
+docker exec compose_cachet_1 php artisan app:install
+docker exec compose_cachet_1 php artisan config:cache
+docker exec compose_cachet_1 env > /etc/docker/compose/env.sh 
 
 exit 0

@@ -1,0 +1,65 @@
+version: "2"
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/ssl/caas-status:/etc/nginx/certs:ro
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt-nginx-proxy-companion
+    restart: always
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/etc/ssl/caas-status:/etc/nginx/certs:rw"
+    environment:
+      DEBUG: "true"
+    #  ACME_CA_URI: "https://acme-staging.api.letsencrypt.org/directory"
+
+  cachet:
+    build:
+      context: https://github.com/herveleclerc/Docker.git
+    depends_on:
+    - postgres
+    - nginx-proxy
+    - letsencrypt-nginx-proxy-companion
+    environment:
+    - VIRTUAL_HOST=status.caas.fr
+    - VIRTUAL_PORT=8000
+    - VIRTUAL_NETWORK=compose_default
+    - LETSENCRYPT_HOST=status.caas.fr
+    - LETSENCRYPT_EMAIL=herve.leclerc@alterway.fr
+    - DB_DRIVER
+    - DB_HOST
+    - DB_DATABASE
+    - DB_USERNAME
+    - DB_PASSWORD
+    - MAIL_HOST
+    - MAIL_PORT
+    - MAIL_USERNAME
+    - MAIL_PASSWORD
+    - MAIL_ADDRESS
+    - MAIL_NAME
+    links:
+    - postgres:postgres
+    expose:
+    - "8000"
+    ports:
+    - "8000"
+  postgres:
+    environment:
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    image: postgres:9.5
+    volumes:
+    - /var/lib/postgresql/data:/var/lib/postgresql/data
